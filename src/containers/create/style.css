@@ -1,0 +1,18 @@
+.invalid {
+  border: 1px solid #ff6469;
+  border-radius: 5px;
+}
+
+.crate_btn_wrap {
+  position: relative;
+  margin: 10px;
+}
+
+.create_btn {
+  position: absolute;
+  right: 10px;
+}
+
+.datePicker {
+  text-align: center;
+}
