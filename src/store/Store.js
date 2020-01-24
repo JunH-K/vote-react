@@ -8,11 +8,11 @@ export default class Store{
     callback && callback();
   }
 
-  getLocalStorage(name=VOTES) {
+  getLocalStorage(name) {
     return JSON.parse( this.localStorage.getItem( name ) )
   }
 
-  setLocalStorage(name=VOTES, item) {
+  setLocalStorage(name, item) {
     this.localStorage.setItem( name, JSON.stringify( item ) );
   }
 };

@@ -5,9 +5,55 @@ export const VOTES = 'voteData';
 const useStore = (name = VOTES) => {
   const store = new Store(name);
 
+  const login = (name, callBack) => {
+    const { users = [] } = store.getLocalStorage(VOTES);
+    const user = users.filter(item => {
+      return item.name === name;
+    });
+
+    if (user.length) {
+      store.setLocalStorage(VOTES, {
+        loginUser: user,
+      });
+    } else {
+      return '존재하지 않는 아이디입니다.';
+    }
+
+    callBack && callBack(`${user.name}로그인 하였습니다.`);
+  };
+
+  const logout = callBack => {
+    store.setLocalStorage(VOTES, {
+      loginUser: {},
+    });
+    callBack && callBack('로그아웃 하였습니다.');
+  };
+
+  const createUser = name => {
+    const { users = [] } = store.getLocalStorage(VOTES);
+    const [lastUser = {}] = users.slice(-1);
+    const { userId: lastUserId = 0 } = lastUser;
+    const userId = lastUserId + 1;
+
+    store.setLocalStorage(VOTES, {
+      users: [
+        ...users,
+        {
+          name,
+          userId,
+        },
+      ],
+    });
+  };
+
+  const getUsers = () => {
+    const { users = {} } = store.getLocalStorage(VOTES);
+    return users;
+  };
+
   const createVote = (vote, callBack) => {
-    const { title: voteTitle, voteItems, date: votePeriod } = vote;
-    const { votes: preVotes } = store.getLocalStorage(VOTES);
+    const { title: voteTitle, voteItems, date: votePeriod, creator } = vote;
+    const { votes: preVotes = [] } = store.getLocalStorage(VOTES);
     const items = voteItems.map(item => {
       return {
         title: item,
@@ -19,9 +65,9 @@ const useStore = (name = VOTES) => {
       votes: [
         ...preVotes,
         {
-          creator: '누가만들었음',
+          creator,
           votePeriod,
-          Voter: ['투표자'],
+          voter: [],
           voteTitle,
           items,
         },
@@ -41,9 +87,84 @@ const useStore = (name = VOTES) => {
     callBack && callBack();
   };
 
+  const getVotes = index => {
+    const { votes: preVotes = [] } = store.getLocalStorage(VOTES);
+    const parseIndex = parseInt(index);
+
+    if (!isNaN(parseIndex) && typeof parseIndex === 'number') {
+      return preVotes.filter((item, itemIndex) => {
+        return itemIndex === parseIndex;
+      });
+    }
+
+    return preVotes;
+  };
+
+  const updateVote = (voteIndex, selectedIndex, voter, callBack) => {
+    const voteIndexNum = parseInt(voteIndex);
+    const selectedIndexNum = parseInt(selectedIndex);
+    const preVotes = getVotes() || [];
+    const [vote] = preVotes.slice(voteIndexNum, voteIndexNum + 1);
+    const { items: preItems = [] } = vote;
+
+    const items = preItems.map((item, itemIndex) => {
+      if (itemIndex === selectedIndexNum) {
+        return {
+          ...item,
+          votes: item.votes + 1,
+        };
+      }
+      return item;
+    });
+
+    const votes = preVotes.map((vote, index) => {
+      if (index === voteIndexNum) {
+        return {
+          ...vote,
+          voter: [...vote.voter, voter],
+          items,
+        };
+      }
+      return vote;
+    });
+
+    store.setLocalStorage(VOTES, {
+      votes,
+    });
+
+    callBack && callBack();
+  };
+
+  const getResult = index => {
+    const [vote = {}] = getVotes(index);
+    const { voter: { length } = {} } = vote;
+    const totalVoter = length;
+    const { items: preItems = [] } = vote;
+
+    const items = preItems.map(item => {
+      const percentage = ((item.votes / totalVoter) * 100).toFixed(1);
+      return {
+        ...item,
+        percentage,
+      };
+    });
+
+    return {
+      totalVoter,
+      items,
+    };
+  };
+
   return {
+    login,
+    logout,
+    createUser,
+    getUsers,
     createVote,
+    getVotes,
     deleteVote,
+    updateVote,
+    getResult,
   };
 };
 
