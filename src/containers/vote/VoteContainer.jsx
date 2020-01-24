@@ -1,46 +1,60 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button } from 'antd';
+import useStore from '../../store/useStore';
 
 const VoteContainer = ({ match, history }) => {
-  const [isSelected, setIsSelected] = useState(false);
-
+  const [selectedItem, setSelectedItem] = useState(-1);
   const {
     params: { id },
   } = match;
 
-  const onChange = event => {
-    setIsSelected(true);
-    console.log(event.target.value);
-  };
+  const { getVotes, updateVote } = useStore();
+  const [vote] = getVotes(id);
 
-  const onClickVote = () => {
-    // TODO:데이터 저장처리
-    history.push(`/result/${id}`);
-  };
+  !vote && history.push('/');
+
+  const onChange = useCallback(
+    index => () => {
+      setSelectedItem(index);
+    },
+    []
+  );
+
+  const onClickVote = useCallback(() => {
+    updateVote(id, selectedItem, '투표자11', () =>
+      history.push(`/result/${id}`)
+    );
+  }, [history, id, updateVote, selectedItem]);
 
   return (
     <>
-      <div className="vote_container">
-        <div className="vote_title">내용내용내용</div>
-        <div className="vote_List">
-          <div className="vote_item">
-            <input
-              type="radio"
-              id="1"
-              name="drone"
-              value="1"
-              onChange={onChange}
-            />
-            <label htmlFor="1">11111</label>
+      {vote ? (
+        <div className="vote_container">
+          <div className="vote_title">{vote.voteTitle}</div>
+          <div className="vote_List">
+            {vote.items.map((item, index) => {
+              return (
+                <div className="vote_item" key={index}>
+                  <input
+                    type="radio"
+                    id={index}
+                    name="vote"
+                    value={item.title}
+                    onChange={onChange(index)}
+                  />
+                  <label htmlFor={index}>{item.title}</label>
+                </div>
+              );
+            })}
           </div>
-        </div>
 
-        {isSelected && (
-          <div>
-            <Button onClick={onClickVote}>Vote</Button>
-          </div>
-        )}
-      </div>
+          {selectedItem > -1 && (
+            <div>
+              <Button onClick={onClickVote}>Vote</Button>
+            </div>
+          )}
+        </div>
+      ) : null}
     </>
   );
 };
