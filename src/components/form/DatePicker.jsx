@@ -32,7 +32,7 @@ const DatePicker = memo(({ onChangeRangePicker }) => {
       disabledSeconds: () => [55, 56],
     };
   }, []);
-  console.log( RangePicker );
+  console.log(RangePicker);
   return (
     <RangePicker
       onChange={onChangeRangePicker}

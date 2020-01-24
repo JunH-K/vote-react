@@ -1,7 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { List, Button } from 'antd';
-import locale from 'antd/es/date-picker/locale/ko_KR';
-import moment from 'moment';
+import { Button, List } from 'antd';
 import Input from '../../components/form/Input';
 import DatePicker from '../../components/form/DatePicker';
 
