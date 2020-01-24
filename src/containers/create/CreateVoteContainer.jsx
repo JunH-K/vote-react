@@ -2,15 +2,18 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Button, List } from 'antd';
 import Input from '../../components/form/Input';
 import DatePicker from '../../components/form/DatePicker';
+import useStore from '../../store/useStore';
 
-const CreateVoteContainer = () => {
+const CreateVoteContainer = props => {
+  const { createVote } = useStore();
   const [voteItems, setVoteItems] = useState(['', '', '']);
   const [title, setTitle] = useState('');
+  const [date, setDate] = useState({});
   const titleRange = useRef([2, 20]);
   const voteItemRange = useRef([2, 10]);
 
   const onChangeRangePicker = useCallback((date, dateString) => {
-    console.log(date, dateString);
+    setDate(date);
   }, []);
 
   const onChangeTitle = useCallback(event => {
@@ -44,8 +47,8 @@ const CreateVoteContainer = () => {
   );
 
   const onClickCreate = useCallback(() => {
-    console.log('만들기기');
-  }, []);
+    createVote({ title, voteItems, date });
+  }, [title, voteItems, date]);
 
   const onClickAddItem = () => {
     setVoteItems([...voteItems, '']);
@@ -53,7 +56,7 @@ const CreateVoteContainer = () => {
 
   return (
     <>
-      <div>
+      <div className={'vote_item'}>
         제목
         <Input
           onChange={onChangeTitle}
@@ -62,7 +65,7 @@ const CreateVoteContainer = () => {
           range={titleRange.current}
         />
       </div>
-      <div>
+      <div className={'vote_item'}>
         투표항목 <Button onClick={onClickAddItem}>추가</Button>
         <List
           bordered
@@ -82,7 +85,7 @@ const CreateVoteContainer = () => {
           )}
         />
       </div>
-      <div className={'datePicker'}>
+      <div className={'datePicker vote_item'}>
         기간 <br />
         <DatePicker onChangeRangePicker={onChangeRangePicker} />
       </div>
