@@ -1,6 +1,11 @@
 import React from 'react';
 import Header from '../components/header/index';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import CreateVoteContainer from './create/index';
 import VoteResultContainer from './result/index';
 import VoteListContainer from './votesList/index';
@@ -14,9 +19,14 @@ const RootContainer = () => {
         <Route exact path="/">
           <Redirect to="/votes" />
         </Route>
-        <Route path="/votes" component={votes} />
-        <Route path="/create" component={CreateVoteContainer} />
-        <Route path="/result/:id" component={VoteResultContainer} />
+        <Switch>
+          <Route path="/votes" component={votes} />
+          <Route path="/create" component={CreateVoteContainer} />
+          <Route path="/result/:id" component={VoteResultContainer} />
+          <Route>
+            <Redirect to="/votes" />
+          </Route>
+        </Switch>
       </Router>
     </div>
   );

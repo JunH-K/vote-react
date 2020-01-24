@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Header = ({ title = '제목' }) => {
+const Header = ({ title = '투표' }) => {
   return (
     <HeaderComponent>
       <h2>{title}</h2>
