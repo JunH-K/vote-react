@@ -47,7 +47,7 @@ const CreateVoteContainer = props => {
   );
 
   const onClickCreate = useCallback(() => {
-    createVote({ title, voteItems, date });
+    createVote({ title, voteItems, date,creator:'튜표자이름' });
   }, [title, voteItems, date]);
 
   const onClickAddItem = () => {
