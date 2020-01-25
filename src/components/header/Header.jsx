@@ -4,15 +4,20 @@ import styled from 'styled-components';
 const Header = ({ title = '투표' }) => {
   return (
     <HeaderComponent>
-      <h2>{title}</h2>
+      <H2>{title}</H2>
     </HeaderComponent>
   );
 };
 
 const HeaderComponent = styled.div`
   position: relative;
-  background-color: rgb(61, 78, 85);
+  background-color: black;
+  color: white;
   padding: 10px;
+`;
+
+const H2 = styled.h2`
+  color: white;
 `;
 
 export default Header;

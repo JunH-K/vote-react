@@ -14,6 +14,7 @@ html {
 
 body {
     min-height: 100%;
+    background-color: rgb(25, 32, 36);
 }
 
 html, body, div, span, applet, object, iframe,
