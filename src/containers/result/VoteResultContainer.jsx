@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
@@ -20,30 +20,57 @@ const VoteResultContainer = props => {
     <>
       <div className="graph_container">
         {items.map((item, index) => {
-          return (
-            <>
-              <div className="result_title">
-                {`${index + 1}. `}
-                {item.title}
-                {` (${item.votes}표)`}
-              </div>
-              <div className={'graph'}>
-                <SpanGraph width={item.percentage} index={index}>
-                  {item.percentage}%
-                </SpanGraph>
-              </div>
-            </>
-          );
+          return <VoteItem item={item} index={index} key={item.title} />;
         })}
       </div>
-      <div>전체투표수 : {totalVoter}</div>
+      <div>
+        <h3>전체투표수 : {`${totalVoter}명`}</h3>
+      </div>
       <div className={'first'}>
         <Link to={'/'}>
-          <Button>처음으로</Button>
+          <Button type="primary"> 투표목록</Button>
         </Link>
       </div>
     </>
   ) : null;
+};
+
+const VoteItem = ({ item, index }) => {
+  const [per, setPer] = useState(0);
+  const interval = useRef(0);
+
+  useEffect(() => {
+    if (!interval.current) {
+      const step = Math.abs(Math.floor(2000 / (0 - item.percentage)));
+      interval.current = setInterval(() => {
+        setPer(per => {
+          return per + 1;
+        });
+      }, step);
+    }
+
+    if (per > item.percentage) {
+      clearInterval(interval.current);
+      setPer(item.percentage);
+    }
+  }, [per, item.percentage]);
+
+  return (
+    <>
+      <div className="result_title">
+        <h3>
+          {`${index + 1}. `}
+          {item.title}
+          {` (${item.votes}표)`}
+        </h3>
+      </div>
+      <div className={'graph'}>
+        <SpanGraph width={item.percentage} index={index}>
+          {per}%
+        </SpanGraph>
+      </div>
+    </>
+  );
 };
 
 const stack = width => {
@@ -63,11 +90,10 @@ const SpanGraph = styled.span`
   width: ${({ width }) => width}%;
   line-height: 40px;
   text-align: right;
-  background: ${({ index }) =>
-    index % 2 === 0 ? 'LightSkyBlue' : 'pink'};
-  border-radius: 40px;
+  background: ${({ index }) => (index % 2 === 0 ? 'LightSkyBlue' : 'pink')};
+  border-radius: 10px;
   box-sizing: border-box;
-  animation: ${({ width }) => stack(width)} 1s 1;
+  animation: ${({ width }) => stack(width)} 2s 1;
 `;
 
 export default VoteResultContainer;
