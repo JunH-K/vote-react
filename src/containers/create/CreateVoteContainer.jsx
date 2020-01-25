@@ -4,15 +4,17 @@ import Input from '../../components/form/Input';
 import DatePicker from '../../components/form/DatePicker';
 import useStore from '../../store/useStore';
 
-const CreateVoteContainer = props => {
+const CreateVoteContainer = ({ history }) => {
   const { createVote } = useStore();
   const [voteItems, setVoteItems] = useState(['', '', '']);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState({});
   const titleRange = useRef([2, 20]);
   const voteItemRange = useRef([2, 10]);
+  const { getLoginUser } = useStore();
+  const user = getLoginUser();
 
-  const onChangeRangePicker = useCallback((date, dateString) => {
+  const onChangeRangePicker = useCallback(date => {
     setDate(date);
   }, []);
 
@@ -47,12 +49,15 @@ const CreateVoteContainer = props => {
   );
 
   const onClickCreate = useCallback(() => {
-    createVote({ title, voteItems, date,creator:'튜표자이름' });
-  }, [title, voteItems, date]);
+    createVote({ title, voteItems, date, creator: user.name }, () => {
+      alert('투표 생성!');
+      history.push('/votes');
+    });
+  }, [title, voteItems, date, createVote, user, history]);
 
-  const onClickAddItem = () => {
+  const onClickAddItem = useCallback(() => {
     setVoteItems([...voteItems, '']);
-  };
+  },[]);
 
   return (
     <>
@@ -66,7 +71,10 @@ const CreateVoteContainer = props => {
         />
       </div>
       <div className={'vote_item'}>
-        투표항목 <Button onClick={onClickAddItem}>추가</Button>
+        투표항목
+        <Button onClick={onClickAddItem} type={'primary'}>
+          추가
+        </Button>
         <List
           bordered
           dataSource={voteItems}
@@ -90,7 +98,12 @@ const CreateVoteContainer = props => {
         <DatePicker onChangeRangePicker={onChangeRangePicker} />
       </div>
       <div className={'crate_btn_wrap'}>
-        <Button className={'create_btn'} onClick={onClickCreate}>
+        <Button
+          type="primary"
+          block
+          className={'create_btn'}
+          onClick={onClickCreate}
+        >
           투표생성
         </Button>
       </div>
