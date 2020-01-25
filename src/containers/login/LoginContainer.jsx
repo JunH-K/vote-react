@@ -6,7 +6,7 @@ import useStore from '../../store/useStore';
 
 const InputGroup = styled.div`
   text-align: right;
-  margin-bottom:25px;
+  margin-bottom: 25px;
 `;
 
 const LoginContainer = ({ history }) => {
@@ -26,19 +26,19 @@ const LoginContainer = ({ history }) => {
     inputRef.current.focus();
   }, []);
 
-  const onChangeCreateId = event => {
+  const onChangeCreateId = useCallback(event => {
     const {
       target: { value },
     } = event;
     setCreateId(value);
-  };
+  }, []);
 
-  const onChangeLoginId = event => {
+  const onChangeLoginId = useCallback(event => {
     const {
       target: { value },
     } = event;
     setLoginId(value);
-  };
+  }, []);
 
   const onClickCreateUser = useCallback(() => {
     createUser(createId, isSuccess => {
