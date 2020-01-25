@@ -6,36 +6,45 @@ const useStore = (name = VOTES) => {
   const store = new Store(name);
 
   const login = (name, callBack) => {
-    const { users = [] } = store.getLocalStorage(VOTES);
-    const user = users.filter(item => {
+    const votesData = store.getLocalStorage(VOTES);
+    const { users = [] } = votesData;
+    const [user] = users.filter(item => {
       return item.name === name;
     });
 
-    if (user.length) {
+    if (user) {
       store.setLocalStorage(VOTES, {
+        ...votesData,
         loginUser: user,
       });
     } else {
-      return '존재하지 않는 아이디입니다.';
+      alert('존재하지 않는 아이디 입니다.');
     }
-
-    callBack && callBack(`${user.name}로그인 하였습니다.`);
+    callBack && callBack(!!user);
   };
 
   const logout = callBack => {
+    const votesData = store.getLocalStorage(VOTES);
     store.setLocalStorage(VOTES, {
+      ...votesData,
       loginUser: {},
     });
-    callBack && callBack('로그아웃 하였습니다.');
+    callBack && callBack(true);
   };
 
-  const createUser = name => {
+  const createUser = (name, callBack) => {
+    if (isDuplicationUser(name)) {
+      return alert('중복 아이디가 있습니다.');
+    }
+
+    const votesData = store.getLocalStorage(VOTES);
     const { users = [] } = store.getLocalStorage(VOTES);
     const [lastUser = {}] = users.slice(-1);
     const { userId: lastUserId = 0 } = lastUser;
     const userId = lastUserId + 1;
 
     store.setLocalStorage(VOTES, {
+      ...votesData,
       users: [
         ...users,
         {
@@ -44,14 +53,28 @@ const useStore = (name = VOTES) => {
         },
       ],
     });
+    callBack && callBack(true);
   };
 
   const getUsers = () => {
-    const { users = {} } = store.getLocalStorage(VOTES);
+    const { users = [] } = store.getLocalStorage(VOTES);
     return users;
   };
 
+  const isDuplicationUser = name => {
+    const users = getUsers();
+    return users.some(user => {
+      return user.name === name;
+    });
+  };
+
+  const getLoginUser = () => {
+    const { loginUser } = store.getLocalStorage(VOTES);
+    return loginUser;
+  };
+
   const createVote = (vote, callBack) => {
+    const votesData = store.getLocalStorage(VOTES);
     const { title: voteTitle, voteItems, date: votePeriod, creator } = vote;
     const { votes: preVotes = [] } = store.getLocalStorage(VOTES);
     const items = voteItems.map(item => {
@@ -62,6 +85,7 @@ const useStore = (name = VOTES) => {
     });
 
     store.setLocalStorage(VOTES, {
+      ...votesData,
       votes: [
         ...preVotes,
         {
@@ -77,13 +101,13 @@ const useStore = (name = VOTES) => {
   };
 
   const deleteVote = (index, callBack) => {
-    const voteData = store.getLocalStorage(VOTES);
-    const { votes: preVotes } = voteData;
+    const votesData = store.getLocalStorage(VOTES);
+    const { votes: preVotes } = votesData;
     const votes = preVotes.filter((item, itemIndex) => {
       return itemIndex !== index;
     });
 
-    store.setLocalStorage(VOTES, { ...voteData, votes });
+    store.setLocalStorage(VOTES, { ...votesData, votes });
     callBack && callBack();
   };
 
@@ -101,6 +125,7 @@ const useStore = (name = VOTES) => {
   };
 
   const updateVote = (voteIndex, selectedIndex, voter, callBack) => {
+    const votesData = store.getLocalStorage(VOTES);
     const voteIndexNum = parseInt(voteIndex);
     const selectedIndexNum = parseInt(selectedIndex);
     const preVotes = getVotes() || [];
@@ -129,6 +154,7 @@ const useStore = (name = VOTES) => {
     });
 
     store.setLocalStorage(VOTES, {
+      ...votesData,
       votes,
     });
 
@@ -159,6 +185,7 @@ const useStore = (name = VOTES) => {
     login,
     logout,
     createUser,
+    getLoginUser,
     getUsers,
     createVote,
     getVotes,
