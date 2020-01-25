@@ -8,6 +8,7 @@ const Input = memo(
     onChange,
     range = [],
     type = '',
+    inputRef,
     ...rest
   }) => {
     const InputComponent = InputAntd[type] ? InputAntd[type] : InputAntd;
@@ -48,8 +49,9 @@ const Input = memo(
 
     return (
       <InputComponent
+        ref={inputRef}
         onChange={onChange}
-        defaultValue={value}
+        value={value}
         placeholder={placeholder}
         {...rest}
         {...suffix}

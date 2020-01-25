@@ -31,7 +31,7 @@ const DatePicker = memo(({ onChangeRangePicker }) => {
       disabledMinutes: () => range(0, 31),
       disabledSeconds: () => [55, 56],
     };
-  }, []);
+  }, [range]);
 
   return (
     <RangePicker
