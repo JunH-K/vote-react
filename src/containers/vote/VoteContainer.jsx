@@ -26,11 +26,13 @@ const VoteContainer = ({ match, history }) => {
     );
   }, [history, id, updateVote, selectedItem]);
 
+  const isSelected = selectedItem > -1;
+
   return (
     <>
       {vote ? (
         <div className="vote_container">
-          <div className="vote_title">{vote.voteTitle}</div>
+          <div className="vote_title"><h2>{vote.voteTitle}</h2></div>
           <div className="vote_List">
             {vote.items.map((item, index) => {
               return (
@@ -42,15 +44,19 @@ const VoteContainer = ({ match, history }) => {
                     value={item.title}
                     onChange={onChange(index)}
                   />
-                  <label htmlFor={index}>{item.title}</label>
+                  <label style={{ fontSize: '20px' }} htmlFor={index}>
+                    {item.title}
+                  </label>
                 </div>
               );
             })}
           </div>
 
-          {selectedItem > -1 && (
+          {isSelected && (
             <div>
-              <Button onClick={onClickVote}>Vote</Button>
+              <Button type="primary" block onClick={onClickVote}>
+                투표
+              </Button>
             </div>
           )}
         </div>
