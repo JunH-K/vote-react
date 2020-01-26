@@ -1,5 +1,5 @@
 import { Icon, Input as InputAntd, Tooltip } from 'antd';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 
 const Input = memo(
   ({
@@ -9,18 +9,31 @@ const Input = memo(
     range = [],
     type = '',
     inputRef,
+    checkValids,
+    name = '',
     ...rest
   }) => {
     const InputComponent = InputAntd[type] ? InputAntd[type] : InputAntd;
 
+    useEffect(() => {
+      const isValid = checkValidation();
+      checkValids && checkValids({ name, isValid });
+    }, [value]);
+
     const checkValidation = () => {
+      const { length = 0 } = value;
+      const [minLength = 1, maxLength = 100] = range;
+      return length >= minLength && length <= maxLength;
+    };
+
+    const renderToolTip = isValid => {
       const { length = 0 } = value;
       if (!length || !range.length) {
         return { suffix: <span /> };
       }
 
       const [minLength = 1, maxLength = 100] = range;
-      const isValid = length >= minLength && length <= maxLength;
+
       let options = {
         tooltipTitle: `${minLength}~${maxLength}자를 입력하세요.`,
         type: 'warning',
@@ -36,6 +49,7 @@ const Input = memo(
       }
 
       const { tooltipTitle = '', ...iconProps } = options;
+
       return {
         suffix: (
           <Tooltip title={tooltipTitle}>
@@ -45,7 +59,8 @@ const Input = memo(
       };
     };
 
-    const suffix = checkValidation();
+    const isValid = checkValidation();
+    const suffix = renderToolTip(isValid);
 
     return (
       <InputComponent

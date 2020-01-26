@@ -17,7 +17,7 @@ const LoginContainer = ({ history }) => {
   const user = getLoginUser();
 
   useEffect(() => {
-    if (Object.entries(user).length) {
+    if (user && Object.entries(user).length) {
       history.push('/votes');
     }
   }, [history, user]);

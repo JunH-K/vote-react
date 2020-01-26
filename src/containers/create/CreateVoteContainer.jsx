@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, List } from 'antd';
 import Input from '../../components/form/Input';
 import DatePicker from '../../components/form/DatePicker';
@@ -9,13 +9,25 @@ const CreateVoteContainer = ({ history }) => {
   const [voteItems, setVoteItems] = useState(['', '', '']);
   const [title, setTitle] = useState('');
   const [date, setDate] = useState({});
+  const [valids, setValids] = useState({});
   const titleRange = useRef([2, 20]);
   const voteItemRange = useRef([2, 10]);
   const { getLoginUser } = useStore();
   const user = getLoginUser();
 
+  useEffect(() => {
+    setValids({
+      ...valids,
+      date: false,
+    });
+  }, []);
+
   const onChangeRangePicker = useCallback(date => {
     setDate(date);
+    setValids({
+      ...valids,
+      date: true,
+    });
   }, []);
 
   const onChangeTitle = useCallback(event => {
@@ -42,6 +54,10 @@ const CreateVoteContainer = ({ history }) => {
   const onClickDelete = useCallback(
     index => () => {
       setVoteItems(items => {
+        if (items.length === 3) {
+          alert('최소 항목은 3개입니다!');
+          return items;
+        }
         return items.filter((item, itemIndex) => itemIndex !== index);
       });
     },
@@ -57,7 +73,23 @@ const CreateVoteContainer = ({ history }) => {
 
   const onClickAddItem = useCallback(() => {
     setVoteItems([...voteItems, '']);
-  },[]);
+  }, [voteItems]);
+
+  const checkAllValid = useCallback(
+    ({ name = '', isValid }) => {
+      setValids({
+        ...valids,
+        [name]: isValid,
+      });
+    },
+    [valids]
+  );
+
+  const isDisabledCreateButton = useCallback(() => {
+    return Object.values(valids).some(item => {
+      return !item;
+    });
+  }, [valids]);
 
   return (
     <>
@@ -66,8 +98,10 @@ const CreateVoteContainer = ({ history }) => {
         <Input
           onChange={onChangeTitle}
           value={title}
-          placeholder={'2~10자를 입력하세요.'}
+          placeholder={'2~20자를 입력하세요.'}
           range={titleRange.current}
+          checkValids={checkAllValid}
+          name={'VoteTitle'}
         />
       </div>
       <div className={'vote_item'}>
@@ -88,6 +122,8 @@ const CreateVoteContainer = ({ history }) => {
                 onChange={onChangeInput(index)}
                 onSearch={onClickDelete(index)}
                 range={voteItemRange.current}
+                checkValids={checkAllValid}
+                name={`item${index}`}
               />
             </List.Item>
           )}
@@ -103,6 +139,7 @@ const CreateVoteContainer = ({ history }) => {
           block
           className={'create_btn'}
           onClick={onClickCreate}
+          disabled={isDisabledCreateButton()}
         >
           투표생성
         </Button>
