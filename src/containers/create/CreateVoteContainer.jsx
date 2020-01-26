@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Button, List } from 'antd';
 import Input from '../../components/form/Input';
 import DatePicker from '../../components/form/DatePicker';
@@ -19,7 +19,7 @@ const CreateVoteContainer = ({ history }) => {
     date => {
       setDate(date);
     },
-    [valids]
+    []
   );
 
   const onChangeTitle = useCallback(event => {
@@ -76,7 +76,7 @@ const CreateVoteContainer = ({ history }) => {
         };
       });
     },
-    [valids]
+    []
   );
 
   const isDisabledCreateButton = useCallback(() => {
@@ -84,8 +84,6 @@ const CreateVoteContainer = ({ history }) => {
       return !item;
     });
   }, [valids]);
-
-  console.log(valids);
 
   return (
     <>

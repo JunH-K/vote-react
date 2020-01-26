@@ -20,7 +20,9 @@ const VoteResultContainer = props => {
     <>
       <div className="graph_container">
         {items.map((item, index) => {
-          return <VoteItem item={item} index={index} key={item.title} />;
+          return (
+            <VoteItem item={item} index={index} key={item.title + index} />
+          );
         })}
       </div>
       <div>
@@ -54,6 +56,12 @@ const VoteItem = ({ item, index }) => {
       setPer(item.percentage);
     }
   }, [per, item.percentage]);
+
+  useEffect(() => {
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, []);
 
   return (
     <>
