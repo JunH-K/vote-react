@@ -20,6 +20,7 @@ const Input = memo(
       checkValids && checkValids({ name, isValid });
     }, [value]);
 
+
     const checkValidation = () => {
       const { length = 0 } = value;
       const [minLength = 1, maxLength = 100] = range;

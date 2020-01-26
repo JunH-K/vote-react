@@ -1,13 +1,17 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { DatePicker as DatePickerAntd } from 'antd';
 import locale from 'antd/es/date-picker/locale/ko_KR';
 import moment from 'moment';
 
 const { RangePicker } = DatePickerAntd;
 
-const DatePicker = memo(({ onChangeRangePicker }) => {
+const DatePicker = memo(({ onChangeRangePicker:onChange, checkValids, name }) => {
+  useEffect(() => {
+    checkValids && checkValids({ name, isValid: false });
+  }, []);
+
   const disabledDate = useCallback(current => {
-    return current && current < moment().endOf('day');
+    return current && current < moment().startOf('day');
   }, []);
 
   const range = useCallback((start, end) => {
@@ -18,20 +22,28 @@ const DatePicker = memo(({ onChangeRangePicker }) => {
     return result;
   }, []);
 
-  const disabledRangeTime = useCallback((_, type) => {
-    if (type === 'start') {
+  const disabledRangeTime = useCallback(
+    (_, type) => {
+      if (type === 'start') {
+        return {
+          disabledHours: () => range(0, 60).splice(4, 20),
+          disabledMinutes: () => range(30, 60),
+          disabledSeconds: () => [55, 56],
+        };
+      }
       return {
-        disabledHours: () => range(0, 60).splice(4, 20),
-        disabledMinutes: () => range(30, 60),
+        disabledHours: () => range(0, 60).splice(20, 4),
+        disabledMinutes: () => range(0, 31),
         disabledSeconds: () => [55, 56],
       };
-    }
-    return {
-      disabledHours: () => range(0, 60).splice(20, 4),
-      disabledMinutes: () => range(0, 31),
-      disabledSeconds: () => [55, 56],
-    };
-  }, [range]);
+    },
+    [range]
+  );
+
+  const onChangeRangePicker = (date) => {
+    onChange(date);
+    checkValids && checkValids({ name, isValid: true });
+  };
 
   return (
     <RangePicker

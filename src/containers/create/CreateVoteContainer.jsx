@@ -15,20 +15,12 @@ const CreateVoteContainer = ({ history }) => {
   const { getLoginUser } = useStore();
   const user = getLoginUser();
 
-  useEffect(() => {
-    setValids({
-      ...valids,
-      date: false,
-    });
-  }, []);
-
-  const onChangeRangePicker = useCallback(date => {
-    setDate(date);
-    setValids({
-      ...valids,
-      date: true,
-    });
-  }, []);
+  const onChangeRangePicker = useCallback(
+    date => {
+      setDate(date);
+    },
+    [valids]
+  );
 
   const onChangeTitle = useCallback(event => {
     setTitle(event.target.value);
@@ -77,9 +69,11 @@ const CreateVoteContainer = ({ history }) => {
 
   const checkAllValid = useCallback(
     ({ name = '', isValid }) => {
-      setValids({
-        ...valids,
-        [name]: isValid,
+      setValids(valids => {
+        return {
+          ...valids,
+          [name]: isValid,
+        };
       });
     },
     [valids]
@@ -90,6 +84,8 @@ const CreateVoteContainer = ({ history }) => {
       return !item;
     });
   }, [valids]);
+
+  console.log(valids);
 
   return (
     <>
@@ -131,7 +127,11 @@ const CreateVoteContainer = ({ history }) => {
       </div>
       <div className={'datePicker vote_item'}>
         기간 <br />
-        <DatePicker onChangeRangePicker={onChangeRangePicker} />
+        <DatePicker
+          onChangeRangePicker={onChangeRangePicker}
+          checkValids={checkAllValid}
+          name={'date'}
+        />
       </div>
       <div className={'crate_btn_wrap'}>
         <Button
