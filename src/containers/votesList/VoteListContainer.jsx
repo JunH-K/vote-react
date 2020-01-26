@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import useStore from '../../store/useStore';
+import moment from 'moment';
 
 const VoteListContainer = ({ match, history }) => {
-  const { getVotes, getLoginUser, logout } = useStore();
+  const { getVotes, getLoginUser, logout, deleteVote } = useStore();
   const votes = getVotes();
   const user = getLoginUser();
 
   useEffect(() => {
-    if (!Object.entries(user).length) {
+    if (!user || !Object.entries(user).length) {
       history.push('/login');
     }
   });
 
   const onClickDelete = index => event => {
     event.stopPropagation();
+    deleteVote(index, () => {
+      window.location.reload();
+      alert('삭제 되었습니다.');
+    });
   };
 
   const onClickEdit = index => event => {
@@ -55,7 +60,7 @@ const VoteListContainer = ({ match, history }) => {
           {votes.map((vote, index) => {
             return (
               <VoteListItem
-                key={vote.creator}
+                key={vote.creator + index}
                 vote={vote}
                 startVote={startVote}
                 index={index}
@@ -79,16 +84,23 @@ const VoteListItem = ({
   onClickDelete,
   onClickEdit,
 }) => {
-  console.log(vote);
-  console.log(user);
+  const start = moment(vote.votePeriod[0]).format('YYYY-MM-DD HH:mm');
+  const end = moment(vote.votePeriod[1]).format('YYYY-MM-DD HH:mm');
+  const isBetween = moment().isBetween(
+    moment(vote.votePeriod[0]),
+    moment(vote.votePeriod[1])
+  );
+
   return (
     <div className="item" onClick={startVote(index)} key={index}>
       <h3 style={{ margin: '5px', borderBottom: '1px solid black' }}>
         {vote.voteTitle}
       </h3>
-      <p>생성자 : {vote.creator}</p>
-      <p>기간 : {vote.votePeriod.toString()}</p>
-      <p>진행중 : 진행중</p>
+      <p className={'sub_title'}>* 생성자 : {vote.creator}</p>
+      <p className={'sub_title'}>* 투표 기간</p>
+      <p>{`${start} ~ ${end}`}</p>
+      <p className={'sub_title'}>* 투표 진행 여부</p>
+      <p>{isBetween ? '진행중' : ' 투표 기간이 아닙니다.'}</p>
       {vote.creator === user.name && (
         <div className="btn_wrap">
           <Button
