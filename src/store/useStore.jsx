@@ -171,7 +171,7 @@ const useStore = (name = VOTES) => {
       const percentage = ((item.votes / totalVoter) * 100).toFixed(1);
       return {
         ...item,
-        percentage,
+        percentage: isNaN(percentage) ? 0 : percentage,
       };
     });
 
