@@ -8,7 +8,7 @@ const { RangePicker } = DatePickerAntd;
 const DatePicker = memo(({ onChangeRangePicker:onChange, checkValids, name }) => {
   useEffect(() => {
     checkValids && checkValids({ name, isValid: false });
-  }, []);
+  }, [checkValids,name]);
 
   const disabledDate = useCallback(current => {
     return current && current < moment().startOf('day');

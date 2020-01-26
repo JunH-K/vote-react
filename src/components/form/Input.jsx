@@ -1,5 +1,5 @@
 import { Icon, Input as InputAntd, Tooltip } from 'antd';
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 
 const Input = memo(
   ({
@@ -15,17 +15,16 @@ const Input = memo(
   }) => {
     const InputComponent = InputAntd[type] ? InputAntd[type] : InputAntd;
 
-    useEffect(() => {
-      const isValid = checkValidation();
-      checkValids && checkValids({ name, isValid });
-    }, [value]);
-
-
-    const checkValidation = () => {
+    const checkValidation = useCallback(() => {
       const { length = 0 } = value;
       const [minLength = 1, maxLength = 100] = range;
       return length >= minLength && length <= maxLength;
-    };
+    }, [value, range]);
+
+    useEffect(() => {
+      const isValid = checkValidation();
+      checkValids && checkValids({ name, isValid });
+    }, [name, checkValids, checkValidation]);
 
     const renderToolTip = isValid => {
       const { length = 0 } = value;
