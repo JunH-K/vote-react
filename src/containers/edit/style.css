@@ -1,0 +1,8 @@
+.invalid {
+  border: 1px solid #ff6469;
+  border-radius: 5px;
+}
+
+.datePicker {
+  text-align: center;
+}
