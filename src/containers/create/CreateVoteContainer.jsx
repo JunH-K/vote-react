@@ -16,17 +16,18 @@ const CreateVoteContainer = ({ history }) => {
   const user = getLoginUser();
 
   useEffect(() => {
-    const isTitleValid =
-      titleRange.current[0] <= title.length &&
-      titleRange.current[1] >= title.length;
-    const isVoteItemsValid = voteItems.every(item => {
-      return (
-        voteItemRange.current[0] <= item.length &&
-        voteItemRange.current[1] >= item.length
-      );
-    });
-    const isDateValid = !!date;
+    const [titleMin, titleMax] = titleRange.current;
+    const [itemMin, itemMax] = voteItemRange.current;
+    const { length: titleLength } = title;
 
+    const isTitleValid = titleMin <= titleLength && titleMax >= titleLength;
+
+    const isVoteItemsValid = voteItems.every(item => {
+      const { length: itemLength } = item;
+      return itemMin <= itemLength && itemMax >= itemLength;
+    });
+
+    const isDateValid = !!date;
     setAllValid([isTitleValid, isVoteItemsValid, isDateValid]);
   }, [title, voteItems, date]);
 
