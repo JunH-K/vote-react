@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ffb83ff827157f904783dfd7e1df77ed",
+    "revision": "0f2fc76888c2864bab008ace0177a2ec",
     "url": "/vote-react/index.html"
   },
   {
-    "revision": "b02133aac37899cb5c80",
+    "revision": "d35c100ef2eaea8ad94f",
     "url": "/vote-react/static/css/2.ff8bd605.chunk.css"
   },
   {
-    "revision": "412dd92eb779969e8fb2",
+    "revision": "daab61c2479bf1f8de57",
     "url": "/vote-react/static/css/main.c91516ed.chunk.css"
   },
   {
-    "revision": "b02133aac37899cb5c80",
-    "url": "/vote-react/static/js/2.bbb03a64.chunk.js"
+    "revision": "d35c100ef2eaea8ad94f",
+    "url": "/vote-react/static/js/2.93185fda.chunk.js"
   },
   {
     "revision": "86afaa925e0f432774bf95b19b6933fb",
-    "url": "/vote-react/static/js/2.bbb03a64.chunk.js.LICENSE"
+    "url": "/vote-react/static/js/2.93185fda.chunk.js.LICENSE"
   },
   {
-    "revision": "412dd92eb779969e8fb2",
-    "url": "/vote-react/static/js/main.c7a1f75f.chunk.js"
+    "revision": "daab61c2479bf1f8de57",
+    "url": "/vote-react/static/js/main.992dfc31.chunk.js"
   },
   {
     "revision": "226f0892f42dd1bbf72d",
