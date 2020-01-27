@@ -14,7 +14,7 @@ const EditVoteContainer = ({ match, history }) => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState([]);
   const [AllValid, setAllValid] = useState([]);
-  const titleRange = useRef([2, 20]);
+  const titleRange = useRef([2, 30]);
   const voteItemRange = useRef([2, 10]);
   const { getLoginUser } = useStore();
   const user = getLoginUser();
@@ -115,7 +115,7 @@ const EditVoteContainer = ({ match, history }) => {
         <Input
           onChange={onChangeTitle}
           value={title}
-          placeholder={'2~20자를 입력하세요.'}
+          placeholder={`${titleRange.current[0]}~${titleRange.current[1]}자를 입력하세요.`}
           range={titleRange.current}
         />
       </div>
@@ -132,7 +132,7 @@ const EditVoteContainer = ({ match, history }) => {
               <Input
                 type={'Search'}
                 value={item}
-                placeholder="투표항목을 입력하세요. 2~10자"
+                placeholder={`투표항목을 입력하세요. ${voteItemRange.current[0]}~${voteItemRange.current[1]}자`}
                 enterButton="삭제"
                 onChange={onChangeInput(index)}
                 onSearch={onClickDelete(index)}

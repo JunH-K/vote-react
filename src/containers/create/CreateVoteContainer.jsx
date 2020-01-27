@@ -10,7 +10,7 @@ const CreateVoteContainer = ({ history }) => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [AllValid, setAllValid] = useState([]);
-  const titleRange = useRef([2, 20]);
+  const titleRange = useRef([2, 30]);
   const voteItemRange = useRef([2, 10]);
   const { getLoginUser } = useStore();
   const user = getLoginUser();
@@ -91,7 +91,7 @@ const CreateVoteContainer = ({ history }) => {
         <Input
           onChange={onChangeTitle}
           value={title}
-          placeholder={'2~20자를 입력하세요.'}
+          placeholder={`${titleRange.current[0]}~${titleRange.current[1]}자를 입력하세요.`}
           range={titleRange.current}
         />
       </div>
@@ -108,7 +108,7 @@ const CreateVoteContainer = ({ history }) => {
               <Input
                 type={'Search'}
                 value={item}
-                placeholder="투표항목을 입력하세요. 2~10자"
+                placeholder={`투표항목을 입력하세요. ${voteItemRange.current[0]}~${voteItemRange.current[1]}자`}
                 enterButton="삭제"
                 onChange={onChangeInput(index)}
                 onSearch={onClickDelete(index)}
@@ -120,7 +120,7 @@ const CreateVoteContainer = ({ history }) => {
       </div>
       <div className={'datePicker vote_item'}>
         기간 <br />
-        <DatePicker onChangeRangePicker={onChangeRangePicker} value={date}/>
+        <DatePicker onChangeRangePicker={onChangeRangePicker} value={date} />
       </div>
       <div className={'crate_btn_wrap'}>
         <Button
