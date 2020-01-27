@@ -7,6 +7,9 @@ https://junh-k.github.io/vote-react/
 # library
 react.js, ant design, ant range picker
 
+# storage
+local storage
+
 페이지
 1. 사용자생성 및 로그인
 
