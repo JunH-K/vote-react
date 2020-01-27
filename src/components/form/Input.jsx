@@ -1,5 +1,5 @@
 import { Icon, Input as InputAntd, Tooltip } from 'antd';
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useCallback } from 'react';
 
 const Input = memo(
   ({
@@ -9,7 +9,6 @@ const Input = memo(
     range = [],
     type = '',
     inputRef,
-    checkValids,
     name = '',
     ...rest
   }) => {

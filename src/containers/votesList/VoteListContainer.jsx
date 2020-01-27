@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import useStore from '../../store/useStore';
 import moment from 'moment';
 
-const VoteListContainer = ({ match, history }) => {
+const VoteListContainer = ({ history }) => {
   const { getVotes, getLoginUser, logout, deleteVote } = useStore();
   const votes = getVotes();
   const user = getLoginUser();
