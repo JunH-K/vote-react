@@ -18,7 +18,7 @@ const LoginContainer = ({ history }) => {
 
   useEffect(() => {
     if (user && Object.entries(user).length) {
-      history.push('/vote-react/votes');
+      history.push('/votes');
     }
   }, [history, user]);
 
@@ -53,7 +53,7 @@ const LoginContainer = ({ history }) => {
   const onClickLogin = useCallback(() => {
     login(loginId, isLogin => {
       if (isLogin) {
-        history.push('/vote-react/votes');
+        history.push('/votes');
       } else {
         setLoginId('');
       }

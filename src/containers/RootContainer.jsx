@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/header/index';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Redirect,
   Route,
   Switch,
@@ -17,22 +17,22 @@ import EditVoteContainer from './edit/EditVoteContainer';
 const RootContainer = () => {
   return (
     <Container>
-      <Router>
+      <Router basename={process.env.REACT_APP_PUBLIC_URL}>
         <Header />
         <Route exact path="/">
-          <Redirect to="/vote-react/login" />
+          <Redirect to="/login" />
         </Route>
         <Switch>
-          <Route path="/vote-react/login" component={LoginContainer} />
-          <Route path="/vote-react/votes" component={votes} />
-          <Route path="/vote-react/create" component={CreateVoteContainer} />
-          <Route path="/vote-react/edit/:id" component={EditVoteContainer} />
+          <Route path="/login" component={LoginContainer} />
+          <Route path="/votes" component={votes} />
+          <Route path="/create" component={CreateVoteContainer} />
+          <Route path="/edit/:id" component={EditVoteContainer} />
           <Route
-            path="/vote-react/result/:id"
+            path="/result/:id"
             component={VoteResultContainer}
           />
           <Route>
-            <Redirect to="/vote-react/login" />
+            <Redirect to="/login" />
           </Route>
         </Switch>
       </Router>

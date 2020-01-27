@@ -14,7 +14,7 @@ const VoteResultContainer = props => {
   } = props;
   const { totalVoter, items } = getResult(id);
 
-  !(totalVoter && items) && history.push('/vote-react');
+  !(totalVoter && items) && history.push('/');
 
   return totalVoter && items ? (
     <>

@@ -12,7 +12,7 @@ const VoteContainer = ({ match, history }) => {
   const [vote] = getVotes(id);
   const user = getLoginUser();
 
-  !vote && history.push('/vote-react');
+  !vote && history.push('/');
 
   useEffect(() => {
     if (vote) {
@@ -20,7 +20,7 @@ const VoteContainer = ({ match, history }) => {
       const { voter } = vote;
       if (voter.includes(name)) {
         alert('이미 투표 했습니다.');
-        history.push(`/vote-react/result/${id}`);
+        history.push(`/result/${id}`);
       }
     }
   });
@@ -34,7 +34,7 @@ const VoteContainer = ({ match, history }) => {
 
       if (!isBetween) {
         alert('투표 기간이 아닙니다.');
-        history.push(`/vote-react/result/${id}`);
+        history.push(`/result/${id}`);
       }
     }
   });
@@ -48,7 +48,7 @@ const VoteContainer = ({ match, history }) => {
 
   const onClickVote = useCallback(() => {
     updateVote(id, selectedItem, user.name, () =>
-      history.push(`/vote-react/result/${id}`)
+      history.push(`/result/${id}`)
     );
   }, [history, id, updateVote, selectedItem, user.name]);
 

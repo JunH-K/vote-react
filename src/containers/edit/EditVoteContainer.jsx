@@ -41,7 +41,7 @@ const EditVoteContainer = ({ match, history }) => {
     const [minDate, maxDate] = votePeriod;
 
     if (creator !== user.name) {
-      history.push('/vote-react/votes');
+      history.push('/votes');
     }
 
     setTitle(voteTitle);
@@ -96,7 +96,7 @@ const EditVoteContainer = ({ match, history }) => {
   const onClickEditComplete = useCallback(() => {
     editVote({ title, voteItems, date, index: id }, () => {
       alert('수정 완료!');
-      history.push('/vote-react/votes');
+      history.push('/votes');
     });
   }, [title, voteItems, date, history, editVote, id]);
 
