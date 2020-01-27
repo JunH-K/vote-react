@@ -66,7 +66,7 @@ const CreateVoteContainer = ({ history }) => {
         return items.filter((item, itemIndex) => itemIndex !== index);
       });
     },
-    [AllValid]
+    []
   );
 
   const onClickCreate = useCallback(() => {

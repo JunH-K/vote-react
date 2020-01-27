@@ -37,8 +37,12 @@ const EditVoteContainer = ({ match, history }) => {
   }, [title, voteItems, date]);
 
   useEffect(() => {
-    const { voteTitle, items, votePeriod } = vote;
+    const { voteTitle, items, votePeriod, creator } = vote;
     const [minDate, maxDate] = votePeriod;
+
+    if (creator !== user.name) {
+      history.push('/vote-react/votes');
+    }
 
     setTitle(voteTitle);
 
@@ -49,7 +53,7 @@ const EditVoteContainer = ({ match, history }) => {
     ]);
 
     setDate([moment(minDate), moment(maxDate)]);
-  }, []);
+  }, [history]);
 
   const onChangeRangePicker = useCallback(date => {
     setDate(date);
@@ -86,15 +90,15 @@ const EditVoteContainer = ({ match, history }) => {
         return items.filter((item, itemIndex) => itemIndex !== index);
       });
     },
-    [AllValid]
+    []
   );
 
   const onClickEditComplete = useCallback(() => {
-    editVote({ title, voteItems, date, index:id }, () => {
+    editVote({ title, voteItems, date, index: id }, () => {
       alert('수정 완료!');
       history.push('/vote-react/votes');
     });
-  }, [title, voteItems, date, user, history]);
+  }, [title, voteItems, date, history, editVote, id]);
 
   const onClickAddItem = useCallback(() => {
     setVoteItems([...voteItems, '']);
