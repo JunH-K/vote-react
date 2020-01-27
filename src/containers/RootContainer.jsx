@@ -7,6 +7,7 @@ import VoteListContainer from './votesList/index';
 import VoteContainer from './vote/index';
 import LoginContainer from "./login/LoginContainer";
 import styled from "styled-components";
+import EditVoteContainer from "./edit/EditVoteContainer";
 
 const RootContainer = () => {
   return (
@@ -20,6 +21,7 @@ const RootContainer = () => {
           <Route path="/vote-react/login" component={ LoginContainer }/>
           <Route path="/vote-react/votes" component={ votes }/>
           <Route path="/vote-react/create" component={ CreateVoteContainer }/>
+          <Route path="/vote-react/edit/:id" component={ EditVoteContainer }/>
           <Route path="/vote-react/result/:id" component={ VoteResultContainer }/>
           <Route>
             <Redirect to="/vote-react/login"/>

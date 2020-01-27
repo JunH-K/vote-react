@@ -24,6 +24,7 @@ const VoteListContainer = ({ history }) => {
 
   const onClickEdit = index => event => {
     event.stopPropagation();
+    history.push(`/vote-react/edit/${index}`);
   };
 
   const startVote = index => () => {
