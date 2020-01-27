@@ -13,8 +13,16 @@ const VoteResultContainer = props => {
     history,
   } = props;
   const { totalVoter, items } = getResult(id);
+  const { getLoginUser } = useStore();
+  const user = getLoginUser();
 
   !(totalVoter && items) && history.push('/');
+
+  useEffect(() => {
+    if (!user || !Object.entries(user).length) {
+      history.push('/');
+    }
+  }, [history]);
 
   return totalVoter && items ? (
     <>

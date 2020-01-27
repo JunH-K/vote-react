@@ -31,6 +31,13 @@ const CreateVoteContainer = ({ history }) => {
     setAllValid([isTitleValid, isVoteItemsValid, isDateValid]);
   }, [title, voteItems, date]);
 
+  useEffect(() => {
+    debugger;
+    if (!user || !Object.entries(user).length) {
+      history.push('/');
+    }
+  }, [history]);
+
   const onChangeRangePicker = useCallback(date => {
     setDate(date);
   }, []);

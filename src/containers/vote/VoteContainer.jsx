@@ -15,6 +15,12 @@ const VoteContainer = ({ match, history }) => {
   !vote && history.push('/');
 
   useEffect(() => {
+    if (!user || !Object.entries(user).length) {
+      history.push('/');
+    }
+  });
+
+  useEffect(() => {
     if (vote) {
       const { name } = user;
       const { voter } = vote;

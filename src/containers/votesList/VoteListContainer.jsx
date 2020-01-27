@@ -10,7 +10,7 @@ const VoteListContainer = ({ history }) => {
 
   useEffect(() => {
     if (!user || !Object.entries(user).length) {
-      history.push('/login');
+      history.push('/');
     }
   });
 
