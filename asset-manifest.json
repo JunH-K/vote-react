@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/vote-react-deploy/static/css/main.c91516ed.chunk.css",
-    "main.js": "/vote-react-deploy/static/js/main.93445af0.chunk.js",
-    "main.js.map": "/vote-react-deploy/static/js/main.93445af0.chunk.js.map",
-    "runtime-main.js": "/vote-react-deploy/static/js/runtime-main.58105edf.js",
-    "runtime-main.js.map": "/vote-react-deploy/static/js/runtime-main.58105edf.js.map",
-    "static/css/2.ff8bd605.chunk.css": "/vote-react-deploy/static/css/2.ff8bd605.chunk.css",
-    "static/js/2.8ad7739f.chunk.js": "/vote-react-deploy/static/js/2.8ad7739f.chunk.js",
-    "static/js/2.8ad7739f.chunk.js.map": "/vote-react-deploy/static/js/2.8ad7739f.chunk.js.map",
-    "index.html": "/vote-react-deploy/index.html",
-    "precache-manifest.351e0d4a5e90541529cae19ac739cd27.js": "/vote-react-deploy/precache-manifest.351e0d4a5e90541529cae19ac739cd27.js",
-    "service-worker.js": "/vote-react-deploy/service-worker.js",
-    "static/css/2.ff8bd605.chunk.css.map": "/vote-react-deploy/static/css/2.ff8bd605.chunk.css.map",
-    "static/css/main.c91516ed.chunk.css.map": "/vote-react-deploy/static/css/main.c91516ed.chunk.css.map",
-    "static/js/2.8ad7739f.chunk.js.LICENSE": "/vote-react-deploy/static/js/2.8ad7739f.chunk.js.LICENSE"
+    "main.css": "/vote-react/static/css/main.c91516ed.chunk.css",
+    "main.js": "/vote-react/static/js/main.9e49db43.chunk.js",
+    "main.js.map": "/vote-react/static/js/main.9e49db43.chunk.js.map",
+    "runtime-main.js": "/vote-react/static/js/runtime-main.1f9a735e.js",
+    "runtime-main.js.map": "/vote-react/static/js/runtime-main.1f9a735e.js.map",
+    "static/css/2.ff8bd605.chunk.css": "/vote-react/static/css/2.ff8bd605.chunk.css",
+    "static/js/2.bbb03a64.chunk.js": "/vote-react/static/js/2.bbb03a64.chunk.js",
+    "static/js/2.bbb03a64.chunk.js.map": "/vote-react/static/js/2.bbb03a64.chunk.js.map",
+    "index.html": "/vote-react/index.html",
+    "precache-manifest.bbd270731de060ecd9175e07f8551145.js": "/vote-react/precache-manifest.bbd270731de060ecd9175e07f8551145.js",
+    "service-worker.js": "/vote-react/service-worker.js",
+    "static/css/2.ff8bd605.chunk.css.map": "/vote-react/static/css/2.ff8bd605.chunk.css.map",
+    "static/css/main.c91516ed.chunk.css.map": "/vote-react/static/css/main.c91516ed.chunk.css.map",
+    "static/js/2.bbb03a64.chunk.js.LICENSE": "/vote-react/static/js/2.bbb03a64.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.58105edf.js",
+    "static/js/runtime-main.1f9a735e.js",
     "static/css/2.ff8bd605.chunk.css",
-    "static/js/2.8ad7739f.chunk.js",
+    "static/js/2.bbb03a64.chunk.js",
     "static/css/main.c91516ed.chunk.css",
-    "static/js/main.93445af0.chunk.js"
+    "static/js/main.9e49db43.chunk.js"
   ]
 }
