@@ -21,11 +21,6 @@ const Input = memo(
       return length >= minLength && length <= maxLength;
     }, [value, range]);
 
-    useEffect(() => {
-      const isValid = checkValidation();
-      checkValids && checkValids({ name, isValid });
-    }, [name, checkValids, checkValidation]);
-
     const renderToolTip = isValid => {
       const { length = 0 } = value;
       if (!length || !range.length) {

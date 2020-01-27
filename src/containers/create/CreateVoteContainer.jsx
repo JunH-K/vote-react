@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Button, List } from 'antd';
 import Input from '../../components/form/Input';
 import DatePicker from '../../components/form/DatePicker';
@@ -8,19 +8,31 @@ const CreateVoteContainer = ({ history }) => {
   const { createVote } = useStore();
   const [voteItems, setVoteItems] = useState(['', '', '']);
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState({});
-  const [valids, setValids] = useState({});
+  const [date, setDate] = useState('');
+  const [AllValid, setAllValid] = useState([]);
   const titleRange = useRef([2, 20]);
   const voteItemRange = useRef([2, 10]);
   const { getLoginUser } = useStore();
   const user = getLoginUser();
 
-  const onChangeRangePicker = useCallback(
-    date => {
-      setDate(date);
-    },
-    []
-  );
+  useEffect(() => {
+    const isTitleValid =
+      titleRange.current[0] <= title.length &&
+      titleRange.current[1] >= title.length;
+    const isVoteItmesValid = voteItems.every(item => {
+      return (
+        voteItemRange.current[0] <= item.length &&
+        voteItemRange.current[1] >= item.length
+      );
+    });
+    const isDateValid = !!date;
+
+    setAllValid([isTitleValid, isVoteItmesValid, isDateValid]);
+  }, [title, voteItems, date]);
+
+  const onChangeRangePicker = useCallback(date => {
+    setDate(date);
+  }, []);
 
   const onChangeTitle = useCallback(event => {
     setTitle(event.target.value);
@@ -53,7 +65,7 @@ const CreateVoteContainer = ({ history }) => {
         return items.filter((item, itemIndex) => itemIndex !== index);
       });
     },
-    []
+    [AllValid]
   );
 
   const onClickCreate = useCallback(() => {
@@ -67,23 +79,9 @@ const CreateVoteContainer = ({ history }) => {
     setVoteItems([...voteItems, '']);
   }, [voteItems]);
 
-  const checkAllValid = useCallback(
-    ({ name = '', isValid }) => {
-      setValids(valids => {
-        return {
-          ...valids,
-          [name]: isValid,
-        };
-      });
-    },
-    []
-  );
-
-  const isDisabledCreateButton = useCallback(() => {
-    return Object.values(valids).some(item => {
-      return !item;
-    });
-  }, [valids]);
+  const isDisabledCreateButton = () => {
+    return AllValid.some(item => !item);
+  };
 
   return (
     <>
@@ -94,8 +92,6 @@ const CreateVoteContainer = ({ history }) => {
           value={title}
           placeholder={'2~20자를 입력하세요.'}
           range={titleRange.current}
-          checkValids={checkAllValid}
-          name={'VoteTitle'}
         />
       </div>
       <div className={'vote_item'}>
@@ -116,8 +112,6 @@ const CreateVoteContainer = ({ history }) => {
                 onChange={onChangeInput(index)}
                 onSearch={onClickDelete(index)}
                 range={voteItemRange.current}
-                checkValids={checkAllValid}
-                name={`item${index}`}
               />
             </List.Item>
           )}
@@ -125,11 +119,7 @@ const CreateVoteContainer = ({ history }) => {
       </div>
       <div className={'datePicker vote_item'}>
         기간 <br />
-        <DatePicker
-          onChangeRangePicker={onChangeRangePicker}
-          checkValids={checkAllValid}
-          name={'date'}
-        />
+        <DatePicker onChangeRangePicker={onChangeRangePicker} name={'date'} />
       </div>
       <div className={'crate_btn_wrap'}>
         <Button
