@@ -14,15 +14,15 @@ const RootContainer = () => {
       <Router>
         <Header/>
         <Route exact path="/">
-          <Redirect to="/login"/>
+          <Redirect to="/vote-react/login"/>
         </Route>
         <Switch>
-          <Route path="/login" component={ LoginContainer }/>
-          <Route path="/votes" component={ votes }/>
-          <Route path="/create" component={ CreateVoteContainer }/>
-          <Route path="/result/:id" component={ VoteResultContainer }/>
+          <Route path="/vote-react/login" component={ LoginContainer }/>
+          <Route path="/vote-react/votes" component={ votes }/>
+          <Route path="/vote-react/create" component={ CreateVoteContainer }/>
+          <Route path="/vote-react/result/:id" component={ VoteResultContainer }/>
           <Route>
-            <Redirect to="/login"/>
+            <Redirect to="/vote-react/login"/>
           </Route>
         </Switch>
       </Router>

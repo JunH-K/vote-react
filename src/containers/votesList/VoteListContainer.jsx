@@ -10,14 +10,14 @@ const VoteListContainer = ({ history }) => {
 
   useEffect(() => {
     if (!user || !Object.entries(user).length) {
-      history.push('/login');
+      history.push('/vote-react/login');
     }
   });
 
   const onClickDelete = index => event => {
     event.stopPropagation();
     deleteVote(index, () => {
-      window.location.reload();
+      history.push('/vote-react/votes');
       alert('삭제 되었습니다.');
     });
   };
@@ -27,16 +27,16 @@ const VoteListContainer = ({ history }) => {
   };
 
   const startVote = index => () => {
-    history.push(`/votes/${index}`);
+    history.push(`/vote-react/votes/${index}`);
   };
 
   const onClickCreateVote = () => {
-    history.push(`/create`);
+    history.push(`/vote-react/create`);
   };
 
   const onClickLogout = () => {
     logout(() => {
-      history.push(`/`);
+      history.push(`/vote-react`);
     });
   };
 

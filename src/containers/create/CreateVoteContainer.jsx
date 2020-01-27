@@ -72,7 +72,7 @@ const CreateVoteContainer = ({ history }) => {
   const onClickCreate = useCallback(() => {
     createVote({ title, voteItems, date, creator: user.name }, () => {
       alert('투표 생성!');
-      history.push('/votes');
+      history.push('/vote-react/votes');
     });
   }, [title, voteItems, date, createVote, user, history]);
 
