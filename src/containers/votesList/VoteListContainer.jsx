@@ -43,9 +43,7 @@ const VoteListContainer = ({ history }) => {
 
   return (
     <>
-      <div style={{ textAlign: 'left'}}>
-        {user.name} 님 안녕하세요!
-      </div>
+      <div style={{ textAlign: 'left' }}>{user.name} 님 안녕하세요!</div>
       <div style={{ textAlign: 'right', margin: '10px' }}>
         <Button type="primary" onClick={onClickCreateVote}>
           투표 생성하기
