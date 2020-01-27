@@ -100,6 +100,36 @@ const useStore = (name = VOTES) => {
     callBack && callBack();
   };
 
+  const editVote = (vote, callBack) => {
+    const votesData = store.getLocalStorage(VOTES);
+    const { title: voteTitle, voteItems, date: votePeriod, index } = vote;
+    const { votes: preVotes = [] } = votesData;
+    const items = voteItems.map(item => {
+      return {
+        title: item,
+        votes: 0,
+      };
+    });
+
+    const votes = preVotes.map((vote, voteIndex) => {
+      if (voteIndex === parseInt(index)) {
+        return {
+          ...vote,
+          voter: [],
+          voteTitle,
+          items,
+          votePeriod,
+        };
+      }
+    });
+
+    store.setLocalStorage(VOTES, {
+      ...votesData,
+      votes,
+    });
+    callBack && callBack();
+  };
+
   const deleteVote = (index, callBack) => {
     const votesData = store.getLocalStorage(VOTES);
     const { votes: preVotes } = votesData;
@@ -192,6 +222,7 @@ const useStore = (name = VOTES) => {
     deleteVote,
     updateVote,
     getResult,
+    editVote,
   };
 };
 
