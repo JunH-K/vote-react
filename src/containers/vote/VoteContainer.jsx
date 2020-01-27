@@ -39,7 +39,7 @@ const VoteContainer = ({ match, history }) => {
       );
 
       if (!isBetween) {
-        alert('투표 기간이 아닙니다.');
+        alert('설문 기간이 아닙니다.');
         history.push(`/result/${id}`);
       }
     }

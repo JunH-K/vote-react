@@ -46,7 +46,7 @@ const VoteListContainer = ({ history }) => {
       <div style={{ textAlign: 'left' }}>{user.name} 님 안녕하세요!</div>
       <div style={{ textAlign: 'right', margin: '10px' }}>
         <Button type="primary" onClick={onClickCreateVote}>
-          투표 생성하기
+          설문지 생성하기
         </Button>
         <Button
           type="primary"
@@ -56,7 +56,7 @@ const VoteListContainer = ({ history }) => {
           로그아웃
         </Button>
       </div>
-      {!votes.length && '투표가 아직 없습니다. 생성하세요.'}
+      {!votes.length && '설문지가 아직 없습니다. 생성하세요.'}
       {user ? (
         <div className="contents">
           {votes.map((vote, index) => {
@@ -99,10 +99,10 @@ const VoteListItem = ({
         {vote.voteTitle}
       </h3>
       <p className={'sub_title'}>* 생성자 : {vote.creator}</p>
-      <p className={'sub_title'}>* 투표 기간</p>
+      <p className={'sub_title'}>* 설문 기간</p>
       <p>{`${start} ~ ${end}`}</p>
-      <p className={'sub_title'}>* 투표 진행 여부</p>
-      <p>{isBetween ? '진행중' : ' 투표 기간이 아닙니다.'}</p>
+      <p className={'sub_title'}>* 설문 진행 여부</p>
+      <p>{isBetween ? '진행중' : ' 설문 기간이 아닙니다.'}</p>
       {vote.creator === user.name && (
         <div className="btn_wrap">
           <Button

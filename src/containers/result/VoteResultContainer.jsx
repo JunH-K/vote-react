@@ -34,11 +34,11 @@ const VoteResultContainer = props => {
         })}
       </div>
       <div>
-        <h3>전체투표수 : {`${totalVoter}명`}</h3>
+        <h3>전체 투표 수 : {`${totalVoter}명`}</h3>
       </div>
       <div className={'first'}>
         <Link to={'/'}>
-          <Button type="primary"> 투표목록</Button>
+          <Button type="primary"> 설문지 목록</Button>
         </Link>
       </div>
     </>

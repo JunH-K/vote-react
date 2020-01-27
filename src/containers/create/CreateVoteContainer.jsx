@@ -78,7 +78,7 @@ const CreateVoteContainer = ({ history }) => {
 
   const onClickCreate = useCallback(() => {
     createVote({ title, voteItems, date, creator: user.name }, () => {
-      alert('투표 생성!');
+      alert('설문지 생성!');
       history.push('/votes');
     });
   }, [title, voteItems, date, createVote, user, history]);
@@ -103,7 +103,7 @@ const CreateVoteContainer = ({ history }) => {
         />
       </div>
       <div className={'vote_item'}>
-        투표항목
+        투표 항목
         <Button onClick={onClickAddItem} type={'primary'}>
           추가
         </Button>
@@ -137,7 +137,7 @@ const CreateVoteContainer = ({ history }) => {
           onClick={onClickCreate}
           disabled={isDisabledCreateButton()}
         >
-          투표생성
+          설문지 생성
         </Button>
       </div>
     </>
