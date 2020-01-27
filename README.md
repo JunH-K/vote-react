@@ -1,4 +1,5 @@
 ## 투표 시스템
+[![HitCount](http://hits.dwyl.io/junh-k/vote-react.svg)](http://hits.dwyl.io/junh-k/vote-react)
 
 테스트 URL
 
