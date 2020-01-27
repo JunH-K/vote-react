@@ -19,7 +19,7 @@ const CreateVoteContainer = ({ history }) => {
     const isTitleValid =
       titleRange.current[0] <= title.length &&
       titleRange.current[1] >= title.length;
-    const isVoteItmesValid = voteItems.every(item => {
+    const isVoteItemsValid = voteItems.every(item => {
       return (
         voteItemRange.current[0] <= item.length &&
         voteItemRange.current[1] >= item.length
@@ -27,7 +27,7 @@ const CreateVoteContainer = ({ history }) => {
     });
     const isDateValid = !!date;
 
-    setAllValid([isTitleValid, isVoteItmesValid, isDateValid]);
+    setAllValid([isTitleValid, isVoteItemsValid, isDateValid]);
   }, [title, voteItems, date]);
 
   const onChangeRangePicker = useCallback(date => {
