@@ -12,7 +12,7 @@ const InputGroup = styled.div`
 const LoginContainer = ({ history }) => {
   const [createId, setCreateId] = useState('');
   const [loginId, setLoginId] = useState('');
-  const { createUser, login, getLoginUser } = useStore();
+  const { createUser, login, getLoginUser, reset } = useStore();
   const inputRef = useRef(null);
   const user = getLoginUser();
 
@@ -60,6 +60,10 @@ const LoginContainer = ({ history }) => {
     });
   }, [loginId, login, history]);
 
+  const onClickReset = () => {
+    reset();
+  };
+
   return (
     <>
       <InputGroup>
@@ -90,6 +94,10 @@ const LoginContainer = ({ history }) => {
           로그인
         </Button>
       </InputGroup>
+
+      <Button type="primary" onClick={onClickReset}>
+        localStorage 초기화
+      </Button>
     </>
   );
 };

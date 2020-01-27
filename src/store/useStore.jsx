@@ -112,7 +112,6 @@ const useStore = (name = VOTES) => {
     });
 
     const votes = preVotes.map((vote, voteIndex) => {
-
       if (voteIndex === parseInt(index)) {
         return {
           ...vote,
@@ -213,6 +212,10 @@ const useStore = (name = VOTES) => {
     };
   };
 
+  const reset = () => {
+    store.setLocalStorage(VOTES, {});
+  };
+
   return {
     login,
     logout,
@@ -225,6 +228,7 @@ const useStore = (name = VOTES) => {
     updateVote,
     getResult,
     editVote,
+    reset,
   };
 };
 
